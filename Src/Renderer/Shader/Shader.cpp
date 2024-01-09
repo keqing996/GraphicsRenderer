@@ -9,7 +9,7 @@
 
 namespace Renderer
 {
-    static bool SHADER_LOAD_FROM_BIN = false;
+    static bool SHADER_LOAD_FROM_BIN = true;
 
     void Shader::Load(const std::string& path)
     {

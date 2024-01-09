@@ -18,7 +18,7 @@ namespace Renderer
 
     void VertexShaderOpenGL::LoadFromBinaray(const char* data, int size)
     {
-        _shaderId = ::glCreateShader(GL_FRAGMENT_SHADER);
+        _shaderId = ::glCreateShader(GL_VERTEX_SHADER);
         ::glShaderBinary(1, &_shaderId, GL_SHADER_BINARY_FORMAT_SPIR_V, data, size);
         ::glSpecializeShader(_shaderId, "main", 0, nullptr, nullptr);
         OpenGLUtility::CheckShaderState(_shaderId);
