@@ -25,7 +25,7 @@ namespace Renderer
         for (const auto& element : _inputLayout.GetLayout())
         {
             auto dataCount = ShaderDataTypeHelper::GetShaderDataCount(element.dataType);
-            GLenum glEnum = OpenUtility::GetShaderDataTypeGlEnum(element.dataType);
+            GLenum glEnum = OpenGLUtility::GetShaderDataTypeGlEnum(element.dataType);
             bool normalized = element.normalized ? GL_TRUE : GL_FALSE;
             auto stride = _inputLayout.GetStride();
             auto offset = element.offset;

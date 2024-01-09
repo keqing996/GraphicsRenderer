@@ -16,6 +16,7 @@ namespace Renderer
         void Load(const std::string& path);
 
     protected:
+        virtual void LoadFromString(const char* data) = 0;
         virtual void LoadFromBinaray(const char* data, int size) = 0;
     };
 }

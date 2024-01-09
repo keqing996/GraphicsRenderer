@@ -1,4 +1,5 @@
 #include <fstream>
+#include <sstream>
 #include <memory>
 #include <Helper/Logger.h>
 #include <Helper/String.h>
@@ -8,40 +9,56 @@
 
 namespace Renderer
 {
+    static bool SHADER_LOAD_FROM_BIN = false;
 
     void Shader::Load(const std::string& path)
     {
-        std::string binPath = path;
+        std::string finalPath = path;
 
-        switch (Application::GetRenderApi())
+        if (SHADER_LOAD_FROM_BIN)
         {
-            case RendererApi::OpenGL:
-                Helper::String::Replace(binPath, std::string("/Shader/"), std::string("/ShaderBin/Spirv/"));
-                binPath += ".spv";
-                break;
-            case RendererApi::Vulkan:
-            case RendererApi::D3D11:
-            case RendererApi::D3D12:
-                break;
-        }
+            switch (Application::GetRenderApi())
+            {
+                case RendererApi::OpenGL:
+                    Helper::String::Replace(finalPath, std::string("/Shader/"), std::string("/ShaderBin/Spirv/"));
+                    finalPath += ".spv";
+                    break;
+                case RendererApi::Vulkan:
+                case RendererApi::D3D11:
+                case RendererApi::D3D12:
+                    break;
+            }
 
-        std::ifstream fs(binPath, std::ios::in | std::ios::binary);
-        if (!fs.is_open())
+            std::ifstream fs(finalPath, std::ios::in | std::ios::binary);
+            if (!fs.is_open())
+            {
+                Helper::Logger::LogError("Get shader fail: {}", finalPath);
+                return;
+            }
+
+            fs.seekg(0, std::ios::end);
+            unsigned int size = fs.tellg();
+
+            std::unique_ptr<char[]> content(new char[size]);
+
+            fs.seekg(0, std::ios::beg);
+            fs.read(&content[0], size);
+            fs.close();
+
+            LoadFromBinaray(content.get(), size);
+        }
+        else
         {
-            Helper::Logger::LogError("Get shader fail: {}", binPath);
-            return;
+            std::ifstream fs(finalPath, std::ios::in);
+            if (!fs.is_open())
+            {
+                Helper::Logger::LogError("Get shader fail: {}", finalPath);
+                return;
+            }
+
+            std::stringstream stringStream;
+            stringStream << fs.rdbuf();
+            LoadFromString(stringStream.str().c_str());
         }
-
-        fs.seekg(0, std::ios::end);
-        unsigned int size = fs.tellg();
-
-        std::unique_ptr<char[]> content(new char[size]);
-
-        fs.seekg(0, std::ios::beg);
-        fs.read(&content[0], size);
-        fs.close();
-
-        LoadFromBinaray(content.get(), size);
-
     }
 }

@@ -22,6 +22,9 @@ namespace Editor
         (void)io;
         ImGui::StyleColorsLight();
 
+        io.IniFilename = nullptr;
+        io.LogFilename = nullptr;
+
         // Backend Setup
         _pBackend->SetUp();
 

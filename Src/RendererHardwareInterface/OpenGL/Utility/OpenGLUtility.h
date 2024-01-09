@@ -8,7 +8,7 @@
 
 namespace Renderer
 {
-    class OpenUtility: public Helper::NonConstructible
+    class OpenGLUtility: public Helper::NonConstructible
     {
     public:
         static GLenum GetShaderDataTypeGlEnum(ShaderDataType type);

@@ -14,7 +14,7 @@ namespace Renderer
         bool Compile() override;
 
     protected:
-        void LoadFromString(const char* data);
+        void LoadFromString(const char* data) override;
         void LoadFromBinaray(const char* data, int size) override;
 
     private:

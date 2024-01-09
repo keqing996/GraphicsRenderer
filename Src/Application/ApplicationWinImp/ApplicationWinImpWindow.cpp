@@ -27,7 +27,7 @@ void ApplicationWinImp::ShowWin32Window(int width, int height, const std::wstrin
     // send self via WM_NCCREATE. build the relationship between instance pointer and win api.
     void* lParam = this;
 
-    Helper::Win::Window::Show(WND_CLASS_NAME, windowName, width, height, style, lParam);
+    _hWnd = (HWND)Helper::Win::Window::Show(WND_CLASS_NAME, windowName, width, height, style, lParam);
 }
 
 void ApplicationWinImp::DestroyWindow()

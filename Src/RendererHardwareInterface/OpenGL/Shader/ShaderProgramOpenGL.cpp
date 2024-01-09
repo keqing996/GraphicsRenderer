@@ -40,7 +40,7 @@ namespace Renderer
         ::glGetProgramiv(_shaderProgramId, GL_LINK_STATUS, &success);
         if (success == GL_FALSE)
         {
-            Helper::Logger::LogError("Shader Link Fail: {}", OpenUtility::GetProgramInfoLog(_shaderProgramId));
+            Helper::Logger::LogError("Shader Link Fail: {}", OpenGLUtility::GetProgramInfoLog(_shaderProgramId));
             return false;
         }
 
