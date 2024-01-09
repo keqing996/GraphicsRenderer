@@ -8,19 +8,27 @@ namespace Renderer
 {
     void RendererPassForward::Init()
     {
-        Ptr<UniformBlock> pUniBlockMvp = UniformBlock::Create("MvpMatrices", {
-            { "u_ModelMatrix", ShaderDataType::Matrix4x4 },
-            { "u_ViewMatrix", ShaderDataType::Matrix4x4 },
-            { "u_ProjectionMatrix", ShaderDataType::Matrix4x4 },
-        });
-
-        Ptr<UniformBuffer> pUniBuffer = UniformBuffer::Create();
-
+        _pUniBufferMvp = UniformBuffer::Create(
+            UniformBlock::Create("MvpMatrices", {
+                { "u_ModelMatrix", ShaderDataType::Matrix4x4 },
+                { "u_ViewMatrix", ShaderDataType::Matrix4x4 },
+                { "u_ProjectionMatrix", ShaderDataType::Matrix4x4 },
+        }));
     }
 
     void RendererPassForward::Renderer(const Scene* pScene)
     {
         auto pMainCamera = pScene->GetMainCamera()->GetComponent<CompCamera>();
+
+        // Prepare MVP uniform buffer
+        const auto* viewMatData = reinterpret_cast<const std::byte*>((pMainCamera->GetViewMatrix()).data());
+        const auto* projMatData = reinterpret_cast<const std::byte*>((pMainCamera->GetProjectionMatrix()).data());
+        _pUniBufferMvp->Bind();
+        _pUniBufferMvp->UpdateElementData("u_ViewMatrix", viewMatData);
+        _pUniBufferMvp->UpdateElementData("u_ProjectionMatrix", projMatData);
+        _pUniBufferMvp->CommitBlockData();
+        _pUniBufferMvp->UnBind();
+
         for (const auto& pObj: pScene->GetAllObjects())
         {
             auto pRenderer = pObj->GetComponent<CompRenderer>();
@@ -30,14 +38,18 @@ namespace Renderer
             auto pAssemble = pRenderer->GetInputAssemble();
             auto pMat = pRenderer->GetMaterial();
 
-            // General uniform
+            // Model Mat
+            const auto* modelMatData = reinterpret_cast<const std::byte*>((pObj->GetModelMatrix()).data());
+            _pUniBufferMvp->Bind();
+            _pUniBufferMvp->UpdateElementData("u_ModelMatrix", modelMatData);
+            _pUniBufferMvp->CommitElementData("u_ModelMatrix");
+            _pUniBufferMvp->UnBind();
+
+            // Shader
             pMat->GetShader(RendererPassType::Forward)->Bind();
-            pMat->GetShader(RendererPassType::Forward)->SetUniformMat4("u_ModelMatrix", pObj->GetModelMatrix());
-            pMat->GetShader(RendererPassType::Forward)->SetUniformMat4("u_ViewMatrix", pMainCamera->GetViewMatrix());
-            pMat->GetShader(RendererPassType::Forward)->SetUniformMat4("u_ProjectionMatrix",pMainCamera->GetProjectionMatrix());
 
             // Draw Call
-            Renderer::RenderCommand::Submit<RendererPassType::Forward>(pAssemble, pMat);
+            RenderCommand::Submit<RendererPassType::Forward>(pAssemble, pMat);
         }
     }
 }

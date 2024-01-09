@@ -11,6 +11,6 @@ namespace Renderer
         void Renderer(const Scene* pScene) override;
 
     private:
-        PassUniform _pUniBlockMvp;
+        Ptr<UniformBuffer> _pUniBufferMvp;
     };
 }

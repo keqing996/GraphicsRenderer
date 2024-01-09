@@ -36,11 +36,13 @@ namespace Renderer
 
     void UniformBufferOpenGL::Bind() const
     {
+        ::glBindBuffer(GL_UNIFORM_BUFFER, _bufferId);
         ::glBindBufferBase(GL_UNIFORM_BUFFER, _bindingPoint, _bufferId);
     }
 
     void UniformBufferOpenGL::UnBind() const
     {
+        ::glBindBuffer(GL_UNIFORM_BUFFER, 0);
     }
 
     void UniformBufferOpenGL::CommitElementData(const std::string& name)

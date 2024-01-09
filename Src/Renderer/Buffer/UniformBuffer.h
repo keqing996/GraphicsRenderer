@@ -14,8 +14,7 @@ namespace Renderer
     public:
         virtual void Bind() const = 0;
         virtual void UnBind() const = 0;
-        void UpdateElementData(const std::string& name, const std::byte* data, int dataSize);
-        void UpdateBlockData(const std::byte* data, int dataSize);
+        void UpdateElementData(const std::string& name, const std::byte* data);
         virtual void CommitElementData(const std::string& name) = 0;
         virtual void CommitBlockData() = 0;
 
