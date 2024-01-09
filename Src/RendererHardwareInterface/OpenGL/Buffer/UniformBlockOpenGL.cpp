@@ -14,6 +14,7 @@ namespace Renderer
         for (const auto& [name, shaderDataType]: _uniformData)
         {
             int needAlign = ShaderDataTypeHelper::GetShaderDataTypeSize(shaderDataType);
+            _uniformSizeMap[name] = needAlign;
 
             // The left space of current line is sufficient to insert the next data.
             if (needAlign < currentLeftAlign)

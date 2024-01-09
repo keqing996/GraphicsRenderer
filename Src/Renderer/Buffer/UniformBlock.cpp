@@ -1,15 +1,19 @@
+#include <Helper/Logger.h>
 #include "UniformBlock.h"
 #include "Application/Application.h"
 #include "RendererHardwareInterface/OpenGL/Buffer/UniformBlockOpenGL.h"
 
 namespace Renderer
 {
-    Ptr<UniformBlock> UniformBlock::Create(const std::string& name)
+    Ptr<UniformBlock> UniformBlock::Create(const std::string& name, const std::initializer_list<Element>& elements)
     {
+        Ptr<UniformBlock> pResult = nullptr;
+
         switch (Application::GetRenderApi())
         {
             case RendererApi::OpenGL:
-                return std::make_shared<UniformBlockOpenGL>(name);
+                pResult = std::make_shared<UniformBlockOpenGL>(name);
+                break;
             case RendererApi::Vulkan:
                 break;
             case RendererApi::D3D11:
@@ -18,7 +22,10 @@ namespace Renderer
                 break;
         }
 
-        return nullptr;
+        if (pResult != nullptr)
+            pResult->Init(elements);
+
+        return pResult;
     }
 
     UniformBlock::UniformBlock(const std::string& name)
@@ -26,9 +33,38 @@ namespace Renderer
     {
     }
 
-    void UniformBlock::Set(const std::initializer_list<Element>& elements)
+    void UniformBlock::Init(const std::initializer_list<Element>& elements)
     {
         _uniformData = elements;
+
         UpdateOffset();
+    }
+
+    const std::string& UniformBlock::GetName() const
+    {
+        return _name;
+    }
+
+    int UniformBlock::GetElementOffset(const std::string& elementName) const
+    {
+        if (auto itr = _uniformOffsetMap.find(elementName); itr != _uniformOffsetMap.end())
+            return itr->second;
+
+        Helper::Logger::LogError(std::format("Uniform block '{}' do not have '{}'", _name, elementName));
+        return -1;
+    }
+
+    int UniformBlock::GetElementSize(const std::string& elementName) const
+    {
+        if (auto itr = _uniformSizeMap.find(elementName); itr != _uniformSizeMap.end())
+            return itr->second;
+
+        Helper::Logger::LogError(std::format("Uniform block '{}' do not have '{}'", _name, elementName));
+        return -1;
+    }
+
+    int UniformBlock::GetBlockSize() const
+    {
+        return _totalSize;
     }
 }

@@ -8,8 +8,7 @@ namespace Renderer
 {
     void RendererPassForward::Init()
     {
-        Ptr<UniformBlock> pUniBlockMvp = UniformBlock::Create("MvpMatrices");
-        pUniBlockMvp->Set({
+        Ptr<UniformBlock> pUniBlockMvp = UniformBlock::Create("MvpMatrices", {
             { "u_ModelMatrix", ShaderDataType::Matrix4x4 },
             { "u_ViewMatrix", ShaderDataType::Matrix4x4 },
             { "u_ProjectionMatrix", ShaderDataType::Matrix4x4 },

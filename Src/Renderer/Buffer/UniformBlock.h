@@ -22,16 +22,23 @@ namespace Renderer
         explicit UniformBlock(const std::string& name);
 
     public:
-        static Ptr<UniformBlock> Create(const std::string& name);
+        static Ptr<UniformBlock> Create(const std::string& name, const std::initializer_list<Element>& elements);
 
     public:
-        void Set(const std::initializer_list<Element>& elements);
+        const std::string& GetName() const;
+        int GetElementOffset(const std::string& elementName) const;
+        int GetElementSize(const std::string& elementName) const;
+        int GetBlockSize() const;
+
+    protected:
+        void Init(const std::initializer_list<Element>& elements);
         virtual void UpdateOffset() = 0;
 
     protected:
         std::string _name;
         std::vector<Element> _uniformData;
         XXHashMap<std::string, int> _uniformOffsetMap;
+        XXHashMap<std::string, int> _uniformSizeMap;
         int _totalSize = 0;
     };
 }
