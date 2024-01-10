@@ -1,8 +1,8 @@
 #pragma once
 
-#include "ThirdParty/XXHash/XXHashMap.h"
 #include "Pass/RendererPass.h"
 #include "Renderer/Buffer/UniformBuffer.h"
+#include "Renderer/Uniform/UniformBlock.h"
 #include "RendererPipelineType.h"
 
 class Scene;
@@ -16,7 +16,7 @@ namespace Renderer
 
     public:
         void Renderer(const Scene* pScene);
-        UniformBuffer* GetUniformBuffer(const std::string& name);
+        UniformBuffer* GetUniformBuffer(Uniform::Name name);
 
     public:
         static Ptr<RendererPipeline> CreateRendererPipeline(RendererPipelineType type);
@@ -33,7 +33,7 @@ namespace Renderer
 
     private:
         std::vector<Ptr<RendererPass>> _passes;
-        XXHashMap<std::string, Ptr<UniformBuffer>> _uniformMap;
+        umap<Uniform::Name, Ptr<UniformBuffer>> _uniformMap;
     };
 
 }

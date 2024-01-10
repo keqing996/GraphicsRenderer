@@ -69,10 +69,14 @@ class Processor:
                     single_custom_converter_config['Map']
                 ))
 
-        file_name: str = single_enum_config['EnumName']
+        if 'FileName' in single_enum_config:
+            self.file_name: str = single_enum_config['FileName']
+        else:
+            self.file_name: str = single_enum_config['EnumName']
+
         file_base_path: str = single_enum_config['FilePath']
-        self.header_file_path: str = file_base_path + file_name + '.h'
-        self.cpp_file_path: str = file_base_path + file_name + '.cpp'
+        self.header_file_path: str = file_base_path + self.file_name + '.h'
+        self.cpp_file_path: str = file_base_path + self.file_name + '.cpp'
 
     def generator_header_file(self) -> None:
         cg: CodeGenerator = CodeGenerator()
@@ -174,7 +178,7 @@ class Processor:
         cg.gen_header_comment().new_line()
 
         # include header
-        cg.gen_include('\"' + self.enum_config.enum_name + '.h\"').new_line()
+        cg.gen_include('\"' + self.file_name + '.h\"').new_line()
         cg.gen_include('<unordered_map>').new_line()
 
         # namespace begin

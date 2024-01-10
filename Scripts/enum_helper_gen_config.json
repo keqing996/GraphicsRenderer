@@ -151,6 +151,30 @@
 				"Renderer"
 			],
 			"StringConverter": true
+		},
+		{
+			"EnumName": "Name",
+			"FileName": "UniformName",
+			"Type": "int",
+			"Namespace": "Renderer::Uniform",
+			"FilePath": "../Src/Renderer/Uniform/",
+			"Value": [
+				"MvpMatrices"
+			],
+			"StringConverter": true
+		},
+		{
+			"EnumName": "Element",
+			"FileName": "UniformElement",
+			"Type": "int",
+			"Namespace": "Renderer::Uniform",
+			"FilePath": "../Src/Renderer/Uniform/",
+			"Value": [
+				"MvpMatricesModelMatrix",
+				"MvpMatricesViewMatrix",
+				"MvpMatricesProjectionMatrix"
+			],
+			"StringConverter": true
 		}
 	]
 }

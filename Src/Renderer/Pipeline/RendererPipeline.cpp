@@ -1,13 +1,12 @@
 #include "RendererPipeline.h"
 #include "Pass/RendererPassForward.h"
-#include "Renderer/Buffer/UniformDefine.h"
 #include "Renderer/Buffer/UniformBufferFactory.h"
 
 namespace Renderer
 {
     RendererPipeline::RendererPipeline()
     {
-        _uniformMap[UniformDefine::MvpMatrices] = UniformFactory::CreateMvpMatrices();
+        _uniformMap[Uniform::Name::MvpMatrices] = Uniform::CreateMvpMatrices<Uniform::Name::MvpMatrices>();
     }
 
     void RendererPipeline::Renderer(const Scene* pScene)
@@ -16,7 +15,7 @@ namespace Renderer
             pPass->Renderer(pScene);
     }
 
-    UniformBuffer* RendererPipeline::GetUniformBuffer(const std::string& name)
+    UniformBuffer* RendererPipeline::GetUniformBuffer(Uniform::Name name)
     {
         const auto itr = _uniformMap.find(name);
         if (itr == _uniformMap.end())

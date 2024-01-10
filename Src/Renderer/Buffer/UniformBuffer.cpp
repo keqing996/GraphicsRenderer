@@ -2,6 +2,7 @@
 #include <algorithm>
 #include "UniformBuffer.h"
 #include "Application/Application.h"
+#include "Renderer/Uniform/UniformBlock.h"
 #include "RendererHardwareInterface/OpenGL/Buffer/UniformBufferOpenGL.h"
 
 namespace Renderer
@@ -31,7 +32,7 @@ namespace Renderer
         std::ranges::fill(_rawData, std::byte { 0x00 });
     }
 
-    void UniformBuffer::UpdateElementData(const std::string& name, const std::byte* data)
+    void UniformBuffer::UpdateElementData(Uniform::Element name, const std::byte* data)
     {
         auto offset = _pUniformBlock->GetElementOffset(name);
         auto dataSize = _pUniformBlock->GetElementSize(name);

@@ -1,13 +1,14 @@
 #pragma once
 
 #include "Define/Define.h"
-#include "Renderer/Buffer/UniformBlock.h"
-#include "Renderer/Buffer/UniformBuffer.h"
 
 class Scene;
 
 namespace Renderer
 {
+    class UniformBlock;
+    class UniformBuffer;
+
     class RendererPass
     {
     public:

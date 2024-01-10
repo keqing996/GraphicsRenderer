@@ -1,10 +1,12 @@
 #pragma once
 
 #include "Define/Define.h"
-#include "UniformBlock.h"
+#include "Renderer/Uniform/UniformElement.h"
 
 namespace Renderer
 {
+    class UniformBlock;
+
     class UniformBuffer
     {
     public:
@@ -14,8 +16,8 @@ namespace Renderer
     public:
         virtual void Bind() const = 0;
         virtual void UnBind() const = 0;
-        void UpdateElementData(const std::string& name, const std::byte* data);
-        virtual void CommitElementData(const std::string& name) = 0;
+        void UpdateElementData(Uniform::Element name, const std::byte* data);
+        virtual void CommitElementData(Uniform::Element name) = 0;
         virtual void CommitBlockData() = 0;
 
     public:

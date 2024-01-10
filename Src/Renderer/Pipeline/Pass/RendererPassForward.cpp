@@ -3,7 +3,6 @@
 #include "Scene/Component/CompCamera.h"
 #include "Scene/Component/CompRenderer.h"
 #include "Renderer/RenderCommand/RenderCommand.h"
-#include "Renderer/Buffer/UniformDefine.h"
 
 namespace Renderer
 {
@@ -19,10 +18,10 @@ namespace Renderer
         const auto* viewMatData = reinterpret_cast<const std::byte*>((pMainCamera->GetViewMatrix()).data());
         const auto* projMatData = reinterpret_cast<const std::byte*>((pMainCamera->GetProjectionMatrix()).data());
 
-        auto pUniBufferMvp = pScene->GetRendererPipeline()->GetUniformBuffer(UniformDefine::MvpMatrices);
+        auto pUniBufferMvp = pScene->GetRendererPipeline()->GetUniformBuffer(Uniform::Name::MvpMatrices);
         pUniBufferMvp->Bind();
-        pUniBufferMvp->UpdateElementData(UniformDefine::MvpMatrices_ViewMatrix, viewMatData);
-        pUniBufferMvp->UpdateElementData(UniformDefine::MvpMatrices_ProjectionMatrix, projMatData);
+        pUniBufferMvp->UpdateElementData(Uniform::Element::MvpMatricesViewMatrix, viewMatData);
+        pUniBufferMvp->UpdateElementData(Uniform::Element::MvpMatricesProjectionMatrix, projMatData);
         pUniBufferMvp->CommitBlockData();
         pUniBufferMvp->UnBind();
 
@@ -38,8 +37,8 @@ namespace Renderer
             // Model Mat
             const auto* modelMatData = reinterpret_cast<const std::byte*>((pObj->GetModelMatrix()).data());
             pUniBufferMvp->Bind();
-            pUniBufferMvp->UpdateElementData(UniformDefine::MvpMatrices_ModelMatrix, modelMatData);
-            pUniBufferMvp->CommitElementData(UniformDefine::MvpMatrices_ModelMatrix);
+            pUniBufferMvp->UpdateElementData(Uniform::Element::MvpMatricesModelMatrix, modelMatData);
+            pUniBufferMvp->CommitElementData(Uniform::Element::MvpMatricesModelMatrix);
             pUniBufferMvp->UnBind();
 
             // Draw Call

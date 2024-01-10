@@ -13,7 +13,7 @@ namespace Renderer
     public:
         void Bind() const override;
         void UnBind() const override;
-        void CommitElementData(const std::string& name) override;
+        void CommitElementData(Uniform::Element name) override;
         void CommitBlockData() override;
 
     private:
