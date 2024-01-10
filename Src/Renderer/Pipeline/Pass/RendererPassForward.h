@@ -9,8 +9,5 @@ namespace Renderer
     public:
         void Init() override;
         void Renderer(const Scene* pScene) override;
-
-    private:
-        Ptr<UniformBuffer> _pUniBufferMvp;
     };
 }

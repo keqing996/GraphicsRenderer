@@ -9,15 +9,17 @@
 class Scene
 {
 public:
-    void SetRendererPipeline(Renderer::RendererPipelineType type);
-    void AddObject(const Ptr<SceneObject>& pObj);
-    void Render();
+    auto SetRendererPipeline(Renderer::RendererPipelineType type) -> void;
+    auto GetRendererPipeline() const -> Renderer::RendererPipeline*;
 
-    void SetMainCamera(Ptr<SceneObject>& pObj);
-    const Ptr<SceneObject>& GetMainCamera() const;
+    auto AddObject(const Ptr<SceneObject>& pObj) -> void;
+    auto Render() -> void;
 
-    const std::vector<Ptr<SceneObject>>& GetAllObjects() const;
-    SceneObject* FindFirstObjectByName(const std::string& name) const;
+    auto SetMainCamera(Ptr<SceneObject>& pObj) -> void;
+    auto GetMainCamera() const -> const Ptr<SceneObject>&;
+
+    auto GetAllObjects() const -> const std::vector<Ptr<SceneObject>>&;
+    auto FindFirstObjectByName(const std::string& name) const -> SceneObject*;
 
 private:
     std::vector<Ptr<SceneObject>> _sceneObjects;

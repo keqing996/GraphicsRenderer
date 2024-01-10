@@ -7,6 +7,11 @@ void Scene::SetRendererPipeline(Renderer::RendererPipelineType type)
     _pRendererPipeline = Renderer::RendererPipeline::CreateRendererPipeline(type);
 }
 
+Renderer::RendererPipeline* Scene::GetRendererPipeline() const
+{
+    return _pRendererPipeline.get();
+}
+
 void Scene::AddObject(const Ptr<SceneObject>& pObj)
 {
     // todo: duplicate ?

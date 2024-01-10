@@ -3,17 +3,12 @@
 #include "Scene/Component/CompCamera.h"
 #include "Scene/Component/CompRenderer.h"
 #include "Renderer/RenderCommand/RenderCommand.h"
+#include "Renderer/Buffer/UniformDefine.h"
 
 namespace Renderer
 {
     void RendererPassForward::Init()
     {
-        _pUniBufferMvp = UniformBuffer::Create(
-            UniformBlock::Create("MvpMatrices", {
-                { "u_ModelMatrix", ShaderDataType::Matrix4x4 },
-                { "u_ViewMatrix", ShaderDataType::Matrix4x4 },
-                { "u_ProjectionMatrix", ShaderDataType::Matrix4x4 },
-        }));
     }
 
     void RendererPassForward::Renderer(const Scene* pScene)
@@ -23,11 +18,13 @@ namespace Renderer
         // Prepare MVP uniform buffer
         const auto* viewMatData = reinterpret_cast<const std::byte*>((pMainCamera->GetViewMatrix()).data());
         const auto* projMatData = reinterpret_cast<const std::byte*>((pMainCamera->GetProjectionMatrix()).data());
-        _pUniBufferMvp->Bind();
-        _pUniBufferMvp->UpdateElementData("u_ViewMatrix", viewMatData);
-        _pUniBufferMvp->UpdateElementData("u_ProjectionMatrix", projMatData);
-        _pUniBufferMvp->CommitBlockData();
-        _pUniBufferMvp->UnBind();
+
+        auto pUniBufferMvp = pScene->GetRendererPipeline()->GetUniformBuffer(UniformDefine::MvpMatrices);
+        pUniBufferMvp->Bind();
+        pUniBufferMvp->UpdateElementData(UniformDefine::MvpMatrices_ViewMatrix, viewMatData);
+        pUniBufferMvp->UpdateElementData(UniformDefine::MvpMatrices_ProjectionMatrix, projMatData);
+        pUniBufferMvp->CommitBlockData();
+        pUniBufferMvp->UnBind();
 
         for (const auto& pObj: pScene->GetAllObjects())
         {
@@ -40,10 +37,10 @@ namespace Renderer
 
             // Model Mat
             const auto* modelMatData = reinterpret_cast<const std::byte*>((pObj->GetModelMatrix()).data());
-            _pUniBufferMvp->Bind();
-            _pUniBufferMvp->UpdateElementData("u_ModelMatrix", modelMatData);
-            _pUniBufferMvp->CommitElementData("u_ModelMatrix");
-            _pUniBufferMvp->UnBind();
+            pUniBufferMvp->Bind();
+            pUniBufferMvp->UpdateElementData(UniformDefine::MvpMatrices_ModelMatrix, modelMatData);
+            pUniBufferMvp->CommitElementData(UniformDefine::MvpMatrices_ModelMatrix);
+            pUniBufferMvp->UnBind();
 
             // Draw Call
             RenderCommand::Submit<RendererPassType::Forward>(pAssemble, pMat);
