@@ -14,8 +14,8 @@ public:
     static double GetFrameTimerElapsed();
 
 private:
-    static inline Helper::Timer _globalTimer = Helper::Timer();
-    static inline Helper::Timer _frameTimer = Helper::Timer();
+    static inline Helper::Timer<Helper::TimePrecision::Microseconds> _globalTimer = Helper::Timer<Helper::TimePrecision::Microseconds>();
+    static inline Helper::Timer<Helper::TimePrecision::Microseconds> _frameTimer = Helper::Timer<Helper::TimePrecision::Microseconds>();
     static inline double _deltaTime = 0;
     static inline double _timeSinceBegin = 0;
 };

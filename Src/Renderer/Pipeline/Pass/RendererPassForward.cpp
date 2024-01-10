@@ -45,9 +45,6 @@ namespace Renderer
             _pUniBufferMvp->CommitElementData("u_ModelMatrix");
             _pUniBufferMvp->UnBind();
 
-            // Shader
-            pMat->GetShader(RendererPassType::Forward)->Bind();
-
             // Draw Call
             RenderCommand::Submit<RendererPassType::Forward>(pAssemble, pMat);
         }

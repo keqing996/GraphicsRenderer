@@ -27,6 +27,7 @@ namespace Renderer
         ::glCreateBuffers(1, &_bufferId);
         ::glBindBuffer(GL_UNIFORM_BUFFER, _bufferId);
         ::glBufferData(GL_UNIFORM_BUFFER, _rawData.size(), _rawData.data(), GL_STATIC_DRAW);
+        //::glBindBufferRange(GL_UNIFORM_BUFFER, _bindingPoint, _bufferId, 0, _rawData.size());
     }
 
     UniformBufferOpenGL::~UniformBufferOpenGL()
