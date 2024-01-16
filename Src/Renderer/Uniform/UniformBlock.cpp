@@ -1,11 +1,12 @@
 #include <Helper/Logger.h>
 #include "UniformBlock.h"
+#include "UniformDefine.h"
 #include "Application/Application.h"
 #include "RendererHardwareInterface/OpenGL/Uniform/UniformBlockOpenGL.h"
 
 namespace Renderer
 {
-    Ptr<UniformBlock> UniformBlock::Create(Uniform::Name name, const std::initializer_list<Element>& elements)
+    Ptr<UniformBlock> UniformBlock::Create(const std::string& name, const std::initializer_list<Element>& elements)
     {
         Ptr<UniformBlock> pResult = nullptr;
 
@@ -28,7 +29,7 @@ namespace Renderer
         return pResult;
     }
 
-    UniformBlock::UniformBlock(Uniform::Name name)
+    UniformBlock::UniformBlock(const std::string& name)
         : _name(name)
     {
     }
@@ -40,30 +41,26 @@ namespace Renderer
         UpdateOffset();
     }
 
-    Uniform::Name UniformBlock::GetName() const
+    const std::string& UniformBlock::GetName() const
     {
         return _name;
     }
 
-    int UniformBlock::GetElementOffset(Uniform::Element elementName) const
+    int UniformBlock::GetElementOffset(const std::string& elementName) const
     {
         if (auto itr = _uniformOffsetMap.find(elementName); itr != _uniformOffsetMap.end())
             return itr->second;
 
-        auto uniformNameStr = Uniform::NameHelper::NameToString(_name);
-        auto uniformEleStr = Uniform::ElementHelper::ElementToString(elementName);
-        Helper::Logger::LogError(std::format("Uniform block '{}' do not have '{}'", uniformNameStr, uniformEleStr));
+        Helper::Logger::LogError(std::format("Uniform block '{}' do not have '{}'", _name, elementName));
         return -1;
     }
 
-    int UniformBlock::GetElementSize(Uniform::Element elementName) const
+    int UniformBlock::GetElementSize(const std::string& elementName) const
     {
         if (auto itr = _uniformSizeMap.find(elementName); itr != _uniformSizeMap.end())
             return itr->second;
 
-        auto uniformNameStr = Uniform::NameHelper::NameToString(_name);
-        auto uniformEleStr = Uniform::ElementHelper::ElementToString(elementName);
-        Helper::Logger::LogError(std::format("Uniform block '{}' do not have '{}'", uniformNameStr, uniformEleStr));
+        Helper::Logger::LogError(std::format("Uniform block '{}' do not have '{}'", _name, elementName));
         return -1;
     }
 

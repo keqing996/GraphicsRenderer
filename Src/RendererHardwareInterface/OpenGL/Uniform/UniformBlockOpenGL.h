@@ -7,7 +7,7 @@ namespace Renderer
     class UniformBlockOpenGL: public UniformBlock
     {
     public:
-        explicit UniformBlockOpenGL(Uniform::Name name);
+        explicit UniformBlockOpenGL(const std::string& name);
 
     public:
         void UpdateOffset() override;

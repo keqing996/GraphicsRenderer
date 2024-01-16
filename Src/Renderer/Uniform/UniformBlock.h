@@ -2,8 +2,7 @@
 
 #include <string>
 #include <vector>
-#include "UniformName.h"
-#include "UniformElement.h"
+#include <ThirdParty/XXHash/XXHashMap.h>
 #include "Define/Define.h"
 #include "Renderer/Shader/ShaderDataType.h"
 
@@ -14,7 +13,7 @@ namespace Renderer
     public:
         struct Element
         {
-            Uniform::Element name;
+            std::string name;
             ShaderDataType shaderDataType;
         };
 
@@ -22,24 +21,24 @@ namespace Renderer
         virtual ~UniformBlock() = default;
 
     public:
-        static Ptr<UniformBlock> Create(Uniform::Name name, const std::initializer_list<Element>& elements);
+        static Ptr<UniformBlock> Create(const std::string& name, const std::initializer_list<Element>& elements);
 
     public:
-        Uniform::Name GetName() const;
-        int GetElementOffset(Uniform::Element elementName) const;
-        int GetElementSize(Uniform::Element elementName) const;
+        const std::string& GetName() const;
+        int GetElementOffset(const std::string& elementName) const;
+        int GetElementSize(const std::string& elementName) const;
         int GetBlockSize() const;
 
     protected:
-        explicit UniformBlock(Uniform::Name name);
+        explicit UniformBlock(const std::string& name);
         void Init(const std::initializer_list<Element>& elements);
         virtual void UpdateOffset() = 0;
 
     protected:
-        Uniform::Name _name;
+        std::string _name;
         std::vector<Element> _uniformData;
-        umap<Uniform::Element, int> _uniformOffsetMap;
-        umap<Uniform::Element, int> _uniformSizeMap;
+        XXHashMap<std::string, int> _uniformOffsetMap;
+        XXHashMap<std::string, int> _uniformSizeMap;
         int _totalSize = 0;
     };
 }

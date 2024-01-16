@@ -2,7 +2,7 @@
 
 namespace Renderer
 {
-    UniformBlockOpenGL::UniformBlockOpenGL(Uniform::Name name)
+    UniformBlockOpenGL::UniformBlockOpenGL(const std::string& name)
         : UniformBlock(name)
     {
     }
