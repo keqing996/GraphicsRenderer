@@ -4,8 +4,6 @@
 
 #include "Define/Define.h"
 #include "Renderer/InputAssemble/InputAssemble.h"
-#include "Renderer/Shader/ShaderProgram.h"
-#include "Renderer/Material/Material.h"
 #include "eigen/Eigen"
 
 namespace Renderer
@@ -20,6 +18,6 @@ namespace Renderer
         virtual void Destroy() = 0;
         virtual void SwapBuffer() = 0;
         virtual void ClearColor(const Eigen::Vector4f& color) = 0;
-        virtual void Submit(RendererPassType pass, const Ptr<InputAssemble>& pVertArray, const Ptr<Material>& pMaterial) = 0;
+        virtual void Submit(const Ptr<InputAssemble>& pInputAssemble) = 0;
     };
 }

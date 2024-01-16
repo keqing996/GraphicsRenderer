@@ -7,6 +7,20 @@
 		"Pixel":
 		{
 			"Path": "Assets/Shader/ForwardUnlit/ForwardUnlit.frag"
-		}
+		},
+		"Uniform": [
+			{
+				"UniformName": "MaterialProperty",
+				"Values": [
+					{
+						"Name": "u_SelfColor",
+						"Type": "Float3",
+						"X": 1,
+						"Y": 1,
+						"Z": 1
+					}
+				]
+			}
+		]
 	}
 }

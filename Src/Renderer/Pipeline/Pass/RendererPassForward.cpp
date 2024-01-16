@@ -4,6 +4,7 @@
 #include "Scene/Component/CompRenderer.h"
 #include "Renderer/RenderCommand/RenderCommand.h"
 #include "Renderer/Uniform/UniformDefine.h"
+#include "Renderer/Pipeline/RendererPipeline.h"
 
 namespace Renderer
 {
@@ -11,7 +12,7 @@ namespace Renderer
     {
     }
 
-    void RendererPassForward::Renderer(const Scene* pScene)
+    void RendererPassForward::Renderer(RendererPipeline* pPipeLine, const Scene* pScene)
     {
         auto pMainCamera = pScene->GetMainCamera()->GetComponent<CompCamera>();
 
@@ -19,7 +20,7 @@ namespace Renderer
         const auto* viewMatData = reinterpret_cast<const std::byte*>((pMainCamera->GetViewMatrix()).data());
         const auto* projMatData = reinterpret_cast<const std::byte*>((pMainCamera->GetProjectionMatrix()).data());
 
-        auto pUniBufferMvp = pScene->GetRendererPipeline()->GetUniformBuffer(Uniform::MvpMatrices);
+        auto pUniBufferMvp = pPipeLine->GetUniformBuffer(Uniform::MvpMatrices);
         pUniBufferMvp->Bind();
         pUniBufferMvp->UpdateElementData(Uniform::MvpMatrices_ViewMatrix, viewMatData);
         pUniBufferMvp->UpdateElementData(Uniform::MvpMatrices_ProjectionMatrix, projMatData);
@@ -42,8 +43,30 @@ namespace Renderer
             pUniBufferMvp->CommitElementData(Uniform::MvpMatrices_ModelMatrix);
             pUniBufferMvp->UnBind();
 
+            // Material Shader
+            auto pShader = pMat->GetShader(RendererPassType::Forward);
+            pShader->Bind();
+
+            // Material Uniform
+            auto pUniformVarVec = pMat->GetUniformVariables(RendererPassType::Forward);
+            if (pUniformVarVec != nullptr)
+            {
+                for (auto pUniVar : *pUniformVarVec)
+                {
+                    auto uniBlockName = pUniVar->GetUniformBlockName();
+                    auto uniVarName = pUniVar->GetUniformValueName();
+                    const auto pUniBlockBuffer = pPipeLine->GetUniformBuffer(uniBlockName);
+                    if (pUniBlockBuffer != nullptr)
+                    {
+                        pUniBlockBuffer->Bind();
+                        pUniBlockBuffer->UpdateElementData(uniVarName, pUniVar->GetData());
+                        pUniBlockBuffer->CommitElementData(uniVarName);
+                    }
+                }
+            }
+
             // Draw Call
-            RenderCommand::Submit<RendererPassType::Forward>(pAssemble, pMat);
+            RenderCommand::Submit(pAssemble);
         }
     }
 }

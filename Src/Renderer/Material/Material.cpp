@@ -5,30 +5,29 @@
 
 #include "nlohmann/json.hpp"
 #include "Renderer/Shader/ShaderType.h"
-#include "UniformVariable/UniformVariableType.h"
-#include "Renderer/Material/UniformVariable/UniformVariableTexture2d.h"
-#include "Renderer/Material/UniformVariable/UniformVariableNumeric.h"
+#include "UniformVariable/MaterialUniformVariable.h"
+#include "UniformVariable/MaterialUniformVariableNumeric.h"
 
 namespace Renderer
 {
     class MaterialJsonHelper
     {
     public:
-        static void ParseUniformVar(const nlohmann::basic_json<>& node, std::function<void(const Ptr<UniformVariable>&)> onUniVarCreate)
+        static void ParseUniformVar(const nlohmann::basic_json<>& node, std::function<void(const Ptr<MaterialUniformVariable>&)> onUniVarCreate)
         {
             if (node.contains("Uniform") && node["Uniform"].is_array())
             {
                 for (const auto& uniformVarConfig: node["Uniform"])
                 {
-                    Ptr<UniformVariable> pUniVar = CreateUniformVar(uniformVarConfig);
+                    Ptr<MaterialUniformVariable> pUniVar = CreateUniformVar(uniformVarConfig);
                     onUniVarCreate(pUniVar);
                 }
             }
         }
 
-        static Ptr<UniformVariable> CreateUniformVar(const nlohmann::basic_json<>& uniformVarConfig)
+        static Ptr<MaterialUniformVariable> CreateUniformVar(const nlohmann::basic_json<>& uniformVarConfig)
         {
-            Ptr<UniformVariable> pUniVar = nullptr;
+            Ptr<MaterialUniformVariable> pUniVar = nullptr;
 
             const std::string& uniVarType = uniformVarConfig["Type"];
             const std::string& uniVarName = uniformVarConfig["Name"];
@@ -104,7 +103,7 @@ namespace Renderer
             auto pShader = ShaderProgram::Create();
 
             // uniform create callback
-            std::function<void(const Ptr<UniformVariable>&)> onUniVarCreate = [this, &pass](const Ptr<UniformVariable>& pUniVar)
+            std::function<void(const Ptr<MaterialUniformVariable>&)> onUniVarCreate = [this, &pass](const Ptr<MaterialUniformVariable>& pUniVar)
             {
                 if (pUniVar != nullptr)
                     _passUniVars[pass.value()].push_back(pUniVar);
@@ -140,28 +139,6 @@ namespace Renderer
         }
     }
 
-    void Material::Bind(RendererPassType pass)
-    {
-        if (_passShaderMap.contains(pass))
-            _passShaderMap[pass]->Bind();
-
-        if (_passUniVars.contains(pass))
-        {
-            for (const auto& pUni: _passUniVars[pass])
-                pUni->Bind();
-        }
-    }
-
-    void Material::SetUniform(RendererPassType pass)
-    {
-        if (!_passShaderMap.contains(pass) || !_passUniVars.contains(pass))
-            return;
-
-        auto& pPassShader = _passShaderMap[pass];
-        for (const auto& pUni: _passUniVars[pass])
-            pUni->SetUniform(pPassShader);
-    }
-
     Ptr<ShaderProgram> Material::GetShader(RendererPassType pass) const
     {
         if (_passShaderMap.contains(pass))
@@ -170,7 +147,7 @@ namespace Renderer
         return nullptr;
     }
 
-    const std::vector<Ptr<UniformVariable>>* Material::GetUniformVariables(RendererPassType pass) const
+    const std::vector<Ptr<MaterialUniformVariable>>* Material::GetUniformVariables(RendererPassType pass) const
     {
         if (_passUniVars.contains(pass))
             return &_passUniVars.at(pass);

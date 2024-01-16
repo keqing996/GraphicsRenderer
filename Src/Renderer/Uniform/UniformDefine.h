@@ -7,4 +7,8 @@ namespace Renderer::Uniform
     inline constexpr char MvpMatrices_ViewMatrix[] = "u_ViewMatrix";
     inline constexpr char MvpMatrices_ProjectionMatrix[] = "u_ProjectionMatrix";
 
+
+    inline constexpr char MaterialProperty[] = "MaterialProperty";
+    inline constexpr char MaterialProperty_SelfColor[] = "u_SelfColor";
+
 }

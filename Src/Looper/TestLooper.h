@@ -2,6 +2,7 @@
 
 #include "Application/AppLooper.h"
 #include "Renderer/InputAssemble/InputAssemble.h"
+#include "Renderer/Pipeline/RendererPipeline.h"
 #include "Scene/Scene.h"
 
 class TestLooper : public AppLooper
@@ -16,6 +17,7 @@ public:
 
 private:
     Scene _scene;
+    Ptr<Renderer::RendererPipeline> _pRendererPipeline;
 };
 
 

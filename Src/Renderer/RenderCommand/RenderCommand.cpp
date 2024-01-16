@@ -39,6 +39,9 @@ namespace Renderer
         _pImpl->ClearColor(color);
     }
 
-
+    void RenderCommand::Submit(const Ptr<InputAssemble>& pInputAssemble)
+    {
+        _pImpl->Submit(pInputAssemble);
+    }
 
 }

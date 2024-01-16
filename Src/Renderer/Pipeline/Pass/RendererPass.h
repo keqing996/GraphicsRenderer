@@ -8,6 +8,7 @@ namespace Renderer
 {
     class UniformBlock;
     class UniformBuffer;
+    class RendererPipeline;
 
     class RendererPass
     {
@@ -20,6 +21,6 @@ namespace Renderer
 
     public:
         virtual void Init() = 0;
-        virtual void Renderer(const Scene* pScene) = 0;
+        virtual void Renderer(RendererPipeline* pPipeLine, const Scene* pScene) = 0;
     };
 }

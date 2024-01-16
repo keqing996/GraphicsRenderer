@@ -8,6 +8,6 @@ namespace Renderer
     {
     public:
         void Init() override;
-        void Renderer(const Scene* pScene) override;
+        void Renderer(RendererPipeline* pPipeLine, const Scene* pScene) override;
     };
 }

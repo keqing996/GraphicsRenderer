@@ -19,12 +19,7 @@ namespace Renderer
     public:
         static void SwapBuffer();
         static void ClearColor(const Eigen::Vector4f& color);
-
-        template<RendererPassType pass>
-        static void Submit(const Ptr<InputAssemble>& pInputAssemble, const Ptr<Material>& pMaterial)
-        {
-            _pImpl->Submit(pass, pInputAssemble, pMaterial);
-        }
+        static void Submit(const Ptr<InputAssemble>& pInputAssemble);
 
     private:
         inline static RenderCommandImpl* _pImpl = nullptr;

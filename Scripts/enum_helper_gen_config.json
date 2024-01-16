@@ -101,7 +101,7 @@
 			]
 		},
 		{
-			"EnumName": "UniformVariableType",
+			"EnumName": "MaterialUniformVariableType",
 			"Type": "int",
 			"Namespace": "Renderer",
 			"FilePath": "../Src/Renderer/Material/UniformVariable/",
@@ -113,8 +113,7 @@
 				"Float3",
 				"Float4",
 				"Mat3",
-				"Mat4",
-				"Texture2D"
+				"Mat4"
 			],
 			"StringConverter": true
 		},

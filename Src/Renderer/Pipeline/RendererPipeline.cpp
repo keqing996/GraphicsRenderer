@@ -13,10 +13,10 @@ namespace Renderer
     void RendererPipeline::Renderer(const Scene* pScene)
     {
         for (const auto& pPass : _passes)
-            pPass->Renderer(pScene);
+            pPass->Renderer(this, pScene);
     }
 
-    UniformBuffer* RendererPipeline::GetUniformBuffer(const std::string& name)
+    UniformBuffer* RendererPipeline::GetUniformBuffer(const std::string_view& name)
     {
         const auto itr = _uniformMap.find(name);
         if (itr == _uniformMap.end())

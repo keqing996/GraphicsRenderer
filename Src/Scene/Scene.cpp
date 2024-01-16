@@ -2,28 +2,11 @@
 #include "Renderer/Pipeline/RendererPipeline.h"
 #include "Component/CompCamera.h"
 
-void Scene::SetRendererPipeline(Renderer::RendererPipelineType type)
-{
-    _pRendererPipeline = Renderer::RendererPipeline::CreateRendererPipeline(type);
-}
-
-Renderer::RendererPipeline* Scene::GetRendererPipeline() const
-{
-    return _pRendererPipeline.get();
-}
-
 void Scene::AddObject(const Ptr<SceneObject>& pObj)
 {
     // todo: duplicate ?
     if (pObj != nullptr)
         _sceneObjects.push_back(pObj);
-}
-
-void Scene::Render()
-{
-    assert(_pRendererPipeline != nullptr);
-
-    _pRendererPipeline->Renderer(this);
 }
 
 void Scene::SetMainCamera(Ptr<SceneObject>& pObj)

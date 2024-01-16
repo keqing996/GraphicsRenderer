@@ -10,7 +10,7 @@ using namespace Renderer;
 
 TestLooper::TestLooper()
 {
-    _scene.SetRendererPipeline(RendererPipelineType::Forward);
+    _pRendererPipeline = RendererPipeline::CreateRendererPipeline(RendererPipelineType::Forward);
 
     auto pQuadObj = PrimitiveObject::CreateCube();
     //pQuadObj->GetComponent<CompRenderer>()->ChangeMaterial(std::make_shared<Material>("Assets/Material/TextureMixtureMat.json"));
@@ -46,7 +46,7 @@ void TestLooper::RenderLoop()
         pObj->SetRotation(rot);
     }
 
-    _scene.Render();
+    _pRendererPipeline->Renderer(&_scene);
 }
 
 void TestLooper::EditorLoop()
