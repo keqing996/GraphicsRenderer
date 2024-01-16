@@ -1,7 +1,8 @@
 #pragma once
 
+#include <string_view>
+
 #include "Define/Define.h"
-#include "Renderer/Uniform/UniformElement.h"
 
 namespace Renderer
 {
@@ -16,8 +17,8 @@ namespace Renderer
     public:
         virtual void Bind() const = 0;
         virtual void UnBind() const = 0;
-        void UpdateElementData(Uniform::Element name, const std::byte* data);
-        virtual void CommitElementData(Uniform::Element name) = 0;
+        void UpdateElementData(const std::string_view& name, const std::byte* data);
+        virtual void CommitElementData(const std::string_view& name) = 0;
         virtual void CommitBlockData() = 0;
 
     public:

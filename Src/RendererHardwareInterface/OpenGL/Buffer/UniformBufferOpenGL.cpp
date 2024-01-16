@@ -3,12 +3,13 @@
 #include "Define/Define.h"
 #include "UniformBufferOpenGL.h"
 #include "Renderer/Uniform/UniformBlock.h"
+#include "Renderer/Uniform/UniformDefine.h"
 #include "RendererHardwareInterface/OpenGL/Glad/Glad.h"
 
 namespace Renderer
 {
-    static const umap<Uniform::Name, int> G_BingdPointMap {
-        { Uniform::Name::MvpMatrices, 0 }
+    static const umap<std::string_view, int> G_BingdPointMap {
+        { Uniform::MvpMatrices, 0 }
     };
 
     UniformBufferOpenGL::UniformBufferOpenGL(const Ptr<UniformBlock>& pBlock)
@@ -20,7 +21,7 @@ namespace Renderer
             _bindingPoint = itr->second;
         else
         {
-            Helper::Logger::LogError(std::format("Uniform block '{}' do not have binding point", static_cast<int>(blockName)));
+            Helper::Logger::LogError(std::format("Uniform block '{}' do not have binding point", blockName));
             _bindingPoint = 0;
         }
 
@@ -47,7 +48,7 @@ namespace Renderer
         ::glBindBuffer(GL_UNIFORM_BUFFER, 0);
     }
 
-    void UniformBufferOpenGL::CommitElementData(Uniform::Element name)
+    void UniformBufferOpenGL::CommitElementData(const std::string_view& name)
     {
         auto offset = _pUniformBlock->GetElementOffset(name);
         auto size = _pUniformBlock->GetElementSize(name);

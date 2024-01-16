@@ -1,21 +1,30 @@
 #pragma once
 
-#include <Helper/>
-#include "Renderer/Uniform/UniformDefine.h"
+#include <Helper/NonConstructible.h>
 #include "Renderer/Buffer/UniformBuffer.h"
+#include "Renderer/Uniform/UniformDefine.h"
+#include "Renderer/Uniform/UniformBlock.h"
 
 namespace Renderer
 {
-    /*
-    Ptr<UniformBuffer> CreateMvpMatrices()
+    class UniformBufferFactory: public Helper::NonConstructible
     {
-        return UniformBuffer::Create(
-                        UniformBlock::Create(Uniform::Name::MvpMatrices, {
-                            { Uniform::Element::MvpMatricesModelMatrix, ShaderDataType::Matrix4x4 },
-                            { Uniform::Element::MvpMatricesViewMatrix, ShaderDataType::Matrix4x4 },
-                            { Uniform::Element::MvpMatricesProjectionMatrix, ShaderDataType::Matrix4x4 },
+    public:
+        template<const char* name>
+        static Ptr<UniformBuffer> Create()
+        {
+            if constexpr (name == Uniform::MvpMatrices)
+            {
+                return UniformBuffer::Create(
+                    UniformBlock::Create(Uniform::MvpMatrices,{
+                        { Uniform::MvpMatrices_ModelMatrix, ShaderDataType::Matrix4x4 },
+                        { Uniform::MvpMatrices_ViewMatrix, ShaderDataType::Matrix4x4 },
+                        { Uniform::MvpMatrices_ProjectionMatrix, ShaderDataType::Matrix4x4 }
                     }));
-    }
-    */
+            }
+
+            return nullptr;
+        }
+    };
 }
 

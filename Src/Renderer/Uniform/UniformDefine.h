@@ -1,12 +1,10 @@
 #pragma once
 
-#include <string>
-
 namespace Renderer::Uniform
 {
-    inline std::string MvpMatrices = "MvpMatrices";
-    inline std::string MvpMatrices_ModelMatrix = "u_ModelMatrix";
-    inline std::string MvpMatrices_ViewMatrix = "u_ViewMatrix";
-    inline std::string MvpMatrices_ProjectionMatrix = "u_ProjectionMatrix";
+    inline constexpr char MvpMatrices[] = "MvpMatrices";
+    inline constexpr char MvpMatrices_ModelMatrix[] = "u_ModelMatrix";
+    inline constexpr char MvpMatrices_ViewMatrix[] = "u_ViewMatrix";
+    inline constexpr char MvpMatrices_ProjectionMatrix[] = "u_ProjectionMatrix";
 
 }

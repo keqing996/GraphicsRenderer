@@ -4,6 +4,7 @@
 #include "Renderer/Buffer/UniformBuffer.h"
 #include "Renderer/Uniform/UniformBlock.h"
 #include "RendererPipelineType.h"
+#include "ThirdParty/XXHash/XXHashMap.h"
 
 class Scene;
 
@@ -16,7 +17,7 @@ namespace Renderer
 
     public:
         void Renderer(const Scene* pScene);
-        UniformBuffer* GetUniformBuffer(Uniform::Name name);
+        UniformBuffer* GetUniformBuffer(const std::string& name);
 
     public:
         static Ptr<RendererPipeline> CreateRendererPipeline(RendererPipelineType type);
@@ -33,7 +34,7 @@ namespace Renderer
 
     private:
         std::vector<Ptr<RendererPass>> _passes;
-        umap<Uniform::Name, Ptr<UniformBuffer>> _uniformMap;
+        XXHashMap<std::string, Ptr<UniformBuffer>> _uniformMap;
     };
 
 }
