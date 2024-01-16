@@ -34,7 +34,7 @@ namespace Renderer
         virtual void UpdateOffset() = 0;
 
     protected:
-        std::string _name;
+        std::string_view _name;
         std::vector<Element> _uniformData;
         umap<std::string_view, int> _uniformOffsetMap;
         umap<std::string_view, int> _uniformSizeMap;
