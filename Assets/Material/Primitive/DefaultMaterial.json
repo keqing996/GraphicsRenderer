@@ -21,6 +21,13 @@
 					}
 				]
 			}
+		],
+		"Textures": [
+			{
+				"UniformVarName": "u_Texture",
+				"Slot": 0,
+				"Path": "Assets/Texture/wall.jpg"
+			}
 		]
 	}
 }

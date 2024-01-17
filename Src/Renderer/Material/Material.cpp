@@ -118,6 +118,20 @@ namespace Renderer
                 }
             }
 
+            // textures
+            if (passShaderConfig.contains("Textures"))
+            {
+                for (auto textureNode : passShaderConfig["Textures"])
+                {
+                    const std::string& uniVarName = textureNode["UniformVarName"];
+                    const int slot = textureNode["Slot"];
+                    const std::string& path = textureNode["Path"];
+
+                    Ptr<MaterialTexture> pMatTex = std::make_shared<MaterialTexture>(uniVarName, slot, path);
+                    _passTextures[pass.value()].push_back(pMatTex);
+                }
+            }
+
             pShader->Compile();
             _passShaderMap[pass.value()] = pShader;
         }
@@ -135,6 +149,14 @@ namespace Renderer
     {
         if (_passUniVars.contains(pass))
             return &_passUniVars.at(pass);
+
+        return nullptr;
+    }
+
+    const std::vector<Ptr<MaterialTexture>>* Material::GetTextures(RendererPassType pass) const
+    {
+        if (_passTextures.contains(pass))
+            return &_passTextures.at(pass);
 
         return nullptr;
     }

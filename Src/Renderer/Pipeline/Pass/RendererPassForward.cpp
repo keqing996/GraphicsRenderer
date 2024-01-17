@@ -70,6 +70,19 @@ namespace Renderer
                 }
             }
 
+            // Texture
+            auto pUniformTexVec = pMat->GetTextures(RendererPassType::Forward);
+            if (pUniformTexVec != nullptr)
+            {
+                for (auto pUniTex : *pUniformTexVec)
+                {
+                    auto pTex = pUniTex->GetTexture();
+                    auto slot = pUniTex->GetSlot();
+                    pTex->Bind(slot);
+                    pShader->SetUniformInt(pUniTex->GetUniformName(), slot);
+                }
+            }
+
             // Draw Call
             RenderCommand::Submit(pAssemble);
         }
