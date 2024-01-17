@@ -15,5 +15,5 @@ layout (std140, binding = 8) uniform MaterialProperty
 void main()
 {
     //color = vec4(u_Color, 1) * texture(u_Texture, v_TexCoord);
-    color = vec4(u_SelfColor, 1);
+    color = vec4(u_SelfColor.xy * v_TexCoord, u_SelfColor.z, 1);
 }

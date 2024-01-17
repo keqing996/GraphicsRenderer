@@ -66,6 +66,7 @@ namespace Renderer
                     pUniBlockBuffer->Bind();
                     pUniBlockBuffer->UpdateElementData(uniVarName, pUniVar->GetData());
                     pUniBlockBuffer->CommitElementData(uniVarName);
+                    pUniBlockBuffer->UnBind();
                 }
             }
 
