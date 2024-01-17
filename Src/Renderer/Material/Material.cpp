@@ -13,12 +13,11 @@ namespace Renderer
     class MaterialJsonHelper
     {
     public:
-        static Ptr<MaterialUniformVariable> CreateUniformVar(const std::string_view& uniformBlockName, const std::string_view& uniformValueName, const nlohmann::basic_json<>& uniformVarConfig)
+        static Ptr<MaterialUniformVariable> CreateUniformVar(const std::string& uniformBlockName, const std::string& uniformValueName, const nlohmann::basic_json<>& uniformVarConfig)
         {
             Ptr<MaterialUniformVariable> pUniVar = nullptr;
 
             const std::string& uniVarType = uniformVarConfig["Type"];
-            const std::string& uniVarName = uniformVarConfig["Name"];
             if (uniVarType == MaterialUniformVariableTypeHelper::EnumToString(MaterialUniformVariableType::Int))
             {
                 int value = uniformVarConfig["Value"];
@@ -108,10 +107,10 @@ namespace Renderer
             {
                 for (auto uniformBlockNode : passShaderConfig["UniformBlock"])
                 {
-                    std::string_view blockName = uniformBlockNode["BlockName"];
+                    const std::string& blockName = uniformBlockNode["BlockName"];
                     for (auto uniformValueNode : uniformBlockNode["Values"])
                     {
-                        std::string_view varName = uniformBlockNode["Name"];
+                        const std::string& varName = uniformValueNode["Name"];
                         auto pUniVar = MaterialJsonHelper::CreateUniformVar(blockName, varName, uniformValueNode);
                         if (pUniVar != nullptr)
                             _passUniVars[pass.value()].push_back(pUniVar);

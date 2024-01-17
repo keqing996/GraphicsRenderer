@@ -8,6 +8,7 @@ namespace Renderer
     RendererPipeline::RendererPipeline()
     {
         _uniformMap[Uniform::MvpMatrices] = UniformBufferFactory::Create<Uniform::MvpMatrices>();
+        _uniformMap[Uniform::MaterialProperty] = UniformBufferFactory::Create<Uniform::MaterialProperty>();
     }
 
     void RendererPipeline::Renderer(const Scene* pScene)

@@ -9,18 +9,18 @@ namespace Renderer
     class MaterialUniformVariable
     {
     public:
-        MaterialUniformVariable(const std::string_view& uniformBlockName, const std::string_view& uniformValueName);
+        MaterialUniformVariable(const std::string& uniformBlockName, const std::string& uniformValueName);
 
     public:
         virtual auto GetType() const -> MaterialUniformVariableType = 0;
         virtual auto GetData() const -> const std::byte* = 0;
 
-        auto GetUniformBlockName() const -> const std::string_view&;
-        auto GetUniformValueName() const -> const std::string_view&;
+        auto GetUniformBlockName() const -> const std::string&;
+        auto GetUniformValueName() const -> const std::string&;
 
     protected:
-        std::string_view _uniformBlockName;
-        std::string_view _uniformValueName;
+        std::string _uniformBlockName;
+        std::string _uniformValueName;
     };
 
 }

@@ -9,7 +9,8 @@
 namespace Renderer
 {
     static const umap<std::string_view, int> G_BingdPointMap {
-        { Uniform::MvpMatrices, 0 }
+        { Uniform::MvpMatrices, 0 },
+        { Uniform::MaterialProperty, 8 }
     };
 
     UniformBufferOpenGL::UniformBufferOpenGL(const Ptr<UniformBlock>& pBlock)

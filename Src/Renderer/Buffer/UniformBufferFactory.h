@@ -22,6 +22,13 @@ namespace Renderer
                         { Uniform::MvpMatrices_ProjectionMatrix, ShaderDataType::Matrix4x4 }
                     }));
             }
+            else if constexpr (name == Uniform::MaterialProperty)
+            {
+                return UniformBuffer::Create(
+                    UniformBlock::Create(Uniform::MaterialProperty,{
+                        { Uniform::MaterialProperty_SelfColor, ShaderDataType::Float3 },
+                    }));
+            }
 
             return nullptr;
         }

@@ -8,7 +8,7 @@ namespace Renderer
     class MaterialUniformVariableNumeric: public MaterialUniformVariable
     {
     public:
-        MaterialUniformVariableNumeric(const std::string_view& uniformBlockName, const std::string_view& uniformValueName, const T& value)
+        MaterialUniformVariableNumeric(const std::string& uniformBlockName, const std::string& uniformValueName, const T& value)
             : MaterialUniformVariable(uniformBlockName, uniformValueName)
             , _value(value)
         {

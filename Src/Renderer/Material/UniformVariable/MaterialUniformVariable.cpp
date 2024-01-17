@@ -3,19 +3,19 @@
 namespace Renderer
 {
     MaterialUniformVariable::MaterialUniformVariable(
-        const std::string_view& uniformBlockName,
-        const std::string_view& uniformValueName)
+        const std::string& uniformBlockName,
+        const std::string& uniformValueName)
         : _uniformBlockName(uniformBlockName)
         , _uniformValueName(uniformValueName)
     {
     }
 
-    auto MaterialUniformVariable::GetUniformBlockName() const -> const std::string_view&
+    auto MaterialUniformVariable::GetUniformBlockName() const -> const std::string&
     {
         return _uniformBlockName;
     }
 
-    auto MaterialUniformVariable::GetUniformValueName() const -> const std::string_view&
+    auto MaterialUniformVariable::GetUniformValueName() const -> const std::string&
     {
         return _uniformValueName;
     }

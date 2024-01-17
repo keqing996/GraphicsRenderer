@@ -1,3 +1,4 @@
+#include <Helper/Logger.h>
 #include "RendererPassForward.h"
 #include "Scene/Scene.h"
 #include "Scene/Component/CompCamera.h"
@@ -54,14 +55,17 @@ namespace Renderer
                 for (auto pUniVar : *pUniformVarVec)
                 {
                     auto uniBlockName = pUniVar->GetUniformBlockName();
-                    auto uniVarName = pUniVar->GetUniformValueName();
                     const auto pUniBlockBuffer = pPipeLine->GetUniformBuffer(uniBlockName);
-                    if (pUniBlockBuffer != nullptr)
+                    if (pUniBlockBuffer == nullptr)
                     {
-                        pUniBlockBuffer->Bind();
-                        pUniBlockBuffer->UpdateElementData(uniVarName, pUniVar->GetData());
-                        pUniBlockBuffer->CommitElementData(uniVarName);
+                        Helper::Logger::LogWarn("Pipeline get uniform buffer {} failed.", uniBlockName);
+                        continue;
                     }
+
+                    auto uniVarName = pUniVar->GetUniformValueName();
+                    pUniBlockBuffer->Bind();
+                    pUniBlockBuffer->UpdateElementData(uniVarName, pUniVar->GetData());
+                    pUniBlockBuffer->CommitElementData(uniVarName);
                 }
             }
 
