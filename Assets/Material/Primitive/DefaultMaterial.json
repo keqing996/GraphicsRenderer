@@ -8,9 +8,9 @@
 		{
 			"Path": "Assets/Shader/ForwardUnlit/ForwardUnlit.frag"
 		},
-		"Uniform": [
+		"UniformBlock": [
 			{
-				"UniformName": "MaterialProperty",
+				"BlockName": "MaterialProperty",
 				"Values": [
 					{
 						"Name": "u_SelfColor",
