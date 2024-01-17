@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include "Renderer/Texture/Texture2d.h"
 
 namespace Renderer
 {
@@ -12,12 +11,12 @@ namespace Renderer
 
     public:
         const std::string& GetUniformName() const;
+        const std::string& GetImagePath() const;
         int GetSlot() const;
-        const Ptr<Texture2d>& GetTexture() const;
 
     private:
         std::string _uniformName;
+        std::string _imagePath;
         int _slot;
-        Ptr<Texture2d> _pTexture;
     };
 }

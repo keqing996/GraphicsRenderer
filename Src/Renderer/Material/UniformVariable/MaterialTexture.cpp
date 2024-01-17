@@ -1,15 +1,14 @@
 #include "MaterialTexture.h"
-#include "Renderer/Assets/AssetsPool.hpp"
+#include "Renderer/Texture/TexturePool.h"
 
 namespace Renderer
 {
     MaterialTexture::MaterialTexture(const std::string& uniformName, int slot, const std::string& imagePath)
         : _uniformName(uniformName)
+        , _imagePath(imagePath)
         , _slot(slot)
     {
-        auto pImage = AssetsPool<Image>::Get(imagePath);
-        _pTexture = Texture2d::Create();
-        _pTexture->PushData(pImage);
+        TexturePool::Preload(imagePath);
     }
 
     const std::string& MaterialTexture::GetUniformName() const
@@ -17,13 +16,13 @@ namespace Renderer
         return _uniformName;
     }
 
+    const std::string& MaterialTexture::GetImagePath() const
+    {
+        return _imagePath;
+    }
+
     int MaterialTexture::GetSlot() const
     {
         return _slot;
-    }
-
-    const Ptr<Texture2d>& MaterialTexture::GetTexture() const
-    {
-        return _pTexture;
     }
 }

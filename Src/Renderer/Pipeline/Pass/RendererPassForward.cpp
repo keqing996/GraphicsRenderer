@@ -6,6 +6,7 @@
 #include "Renderer/RenderCommand/RenderCommand.h"
 #include "Renderer/Uniform/UniformDefine.h"
 #include "Renderer/Pipeline/RendererPipeline.h"
+#include "Renderer/Texture/TexturePool.h"
 
 namespace Renderer
 {
@@ -76,10 +77,13 @@ namespace Renderer
             {
                 for (auto pUniTex : *pUniformTexVec)
                 {
-                    auto pTex = pUniTex->GetTexture();
-                    auto slot = pUniTex->GetSlot();
-                    pTex->Bind(slot);
-                    pShader->SetUniformInt(pUniTex->GetUniformName(), slot);
+                    auto pTex = TexturePool::GetTexture(pUniTex->GetImagePath());
+                    if (pTex != nullptr)
+                    {
+                        auto slot = pUniTex->GetSlot();
+                        pTex->Bind(slot);
+                        pShader->SetUniformInt(pUniTex->GetUniformName(), slot);
+                    }
                 }
             }
 
