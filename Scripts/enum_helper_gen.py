@@ -35,7 +35,7 @@ class Processor:
         self.helper_class_name: str = self.enum_config.enum_name + 'Helper'
 
         if self.has_string_converter:
-            enum_to_string_func_name: str = self.enum_config.enum_name + 'ToString'
+            enum_to_string_func_name: str = 'EnumToString'
             enum_to_string_input: dict[str, str] = {self.enum_config.enum_name: 'data'}
 
             self.enum_to_string_function_config = FunctionConfig(
@@ -46,7 +46,7 @@ class Processor:
             )
             self.enum_to_string_function_config.add_static()
 
-            string_to_enum_func_name: str = 'StringTo' + self.enum_config.enum_name
+            string_to_enum_func_name: str = 'StringToEnum'
             string_to_enum_input: dict[str, str] = {'const std::string&': 'data'}
 
             self.string_to_enum_function_config = FunctionConfig(

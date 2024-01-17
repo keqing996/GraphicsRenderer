@@ -7,7 +7,7 @@
 namespace Renderer
 {
 	
-	std::string MaterialUniformVariableTypeHelper::MaterialUniformVariableTypeToString(MaterialUniformVariableType data)
+	std::string MaterialUniformVariableTypeHelper::EnumToString(MaterialUniformVariableType data)
 	{
 		switch (data)
 		{
@@ -33,7 +33,7 @@ namespace Renderer
 		
 	}
 	
-	std::optional<MaterialUniformVariableType> MaterialUniformVariableTypeHelper::StringToMaterialUniformVariableType(const std::string& data)
+	std::optional<MaterialUniformVariableType> MaterialUniformVariableTypeHelper::StringToEnum(const std::string& data)
 	{
 		static std::unordered_map<std::string, MaterialUniformVariableType> map = 
 		{

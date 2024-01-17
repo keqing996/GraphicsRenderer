@@ -5,7 +5,7 @@
 #include "RendererApi.h"
 #include <unordered_map>
 
-std::string RendererApiHelper::RendererApiToString(RendererApi data)
+std::string RendererApiHelper::EnumToString(RendererApi data)
 {
 	switch (data)
 	{
@@ -23,7 +23,7 @@ std::string RendererApiHelper::RendererApiToString(RendererApi data)
 	
 }
 
-std::optional<RendererApi> RendererApiHelper::StringToRendererApi(const std::string& data)
+std::optional<RendererApi> RendererApiHelper::StringToEnum(const std::string& data)
 {
 	static std::unordered_map<std::string, RendererApi> map = 
 	{

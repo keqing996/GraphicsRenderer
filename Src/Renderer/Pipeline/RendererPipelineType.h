@@ -22,8 +22,8 @@ namespace Renderer
 		RendererPipelineTypeHelper() = delete;
 		
 	public:
-		static std::string RendererPipelineTypeToString(RendererPipelineType data);
-		static std::optional<RendererPipelineType> StringToRendererPipelineType(const std::string& data);
+		static std::string EnumToString(RendererPipelineType data);
+		static std::optional<RendererPipelineType> StringToEnum(const std::string& data);
 		
 	};
 

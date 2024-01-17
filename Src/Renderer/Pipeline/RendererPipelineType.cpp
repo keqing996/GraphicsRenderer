@@ -7,7 +7,7 @@
 namespace Renderer
 {
 	
-	std::string RendererPipelineTypeHelper::RendererPipelineTypeToString(RendererPipelineType data)
+	std::string RendererPipelineTypeHelper::EnumToString(RendererPipelineType data)
 	{
 		switch (data)
 		{
@@ -23,7 +23,7 @@ namespace Renderer
 		
 	}
 	
-	std::optional<RendererPipelineType> RendererPipelineTypeHelper::StringToRendererPipelineType(const std::string& data)
+	std::optional<RendererPipelineType> RendererPipelineTypeHelper::StringToEnum(const std::string& data)
 	{
 		static std::unordered_map<std::string, RendererPipelineType> map = 
 		{

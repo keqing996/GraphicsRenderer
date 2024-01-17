@@ -27,8 +27,8 @@ namespace Renderer
 		MaterialUniformVariableTypeHelper() = delete;
 		
 	public:
-		static std::string MaterialUniformVariableTypeToString(MaterialUniformVariableType data);
-		static std::optional<MaterialUniformVariableType> StringToMaterialUniformVariableType(const std::string& data);
+		static std::string EnumToString(MaterialUniformVariableType data);
+		static std::optional<MaterialUniformVariableType> StringToEnum(const std::string& data);
 		
 	};
 

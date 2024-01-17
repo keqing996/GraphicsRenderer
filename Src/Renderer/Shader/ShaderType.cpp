@@ -7,7 +7,7 @@
 namespace Renderer
 {
 	
-	std::string ShaderTypeHelper::ShaderTypeToString(ShaderType data)
+	std::string ShaderTypeHelper::EnumToString(ShaderType data)
 	{
 		switch (data)
 		{
@@ -21,7 +21,7 @@ namespace Renderer
 		
 	}
 	
-	std::optional<ShaderType> ShaderTypeHelper::StringToShaderType(const std::string& data)
+	std::optional<ShaderType> ShaderTypeHelper::StringToEnum(const std::string& data)
 	{
 		static std::unordered_map<std::string, ShaderType> map = 
 		{

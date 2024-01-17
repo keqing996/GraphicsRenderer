@@ -21,8 +21,8 @@ public:
 	RendererApiHelper() = delete;
 	
 public:
-	static std::string RendererApiToString(RendererApi data);
-	static std::optional<RendererApi> StringToRendererApi(const std::string& data);
+	static std::string EnumToString(RendererApi data);
+	static std::optional<RendererApi> StringToEnum(const std::string& data);
 	
 };
 

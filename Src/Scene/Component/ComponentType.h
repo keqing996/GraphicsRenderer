@@ -20,8 +20,8 @@ public:
 	ComponentTypeHelper() = delete;
 	
 public:
-	static std::string ComponentTypeToString(ComponentType data);
-	static std::optional<ComponentType> StringToComponentType(const std::string& data);
+	static std::string EnumToString(ComponentType data);
+	static std::optional<ComponentType> StringToEnum(const std::string& data);
 	
 };
 

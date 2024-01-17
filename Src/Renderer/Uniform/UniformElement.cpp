@@ -7,7 +7,7 @@
 namespace Renderer::Uniform
 {
 	
-	std::string ElementHelper::ElementToString(Element data)
+	std::string ElementHelper::EnumToString(Element data)
 	{
 		switch (data)
 		{
@@ -23,7 +23,7 @@ namespace Renderer::Uniform
 		
 	}
 	
-	std::optional<Element> ElementHelper::StringToElement(const std::string& data)
+	std::optional<Element> ElementHelper::StringToEnum(const std::string& data)
 	{
 		static std::unordered_map<std::string, Element> map = 
 		{

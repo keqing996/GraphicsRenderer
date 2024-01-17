@@ -31,8 +31,8 @@ namespace Renderer
 		ShaderDataTypeHelper() = delete;
 		
 	public:
-		static std::string ShaderDataTypeToString(ShaderDataType data);
-		static std::optional<ShaderDataType> StringToShaderDataType(const std::string& data);
+		static std::string EnumToString(ShaderDataType data);
+		static std::optional<ShaderDataType> StringToEnum(const std::string& data);
 		static unsigned int GetShaderDataTypeSize(ShaderDataType data);
 		static unsigned int GetShaderDataCount(ShaderDataType data);
 		

@@ -22,8 +22,8 @@ namespace Renderer::Uniform
 		ElementHelper() = delete;
 		
 	public:
-		static std::string ElementToString(Element data);
-		static std::optional<Element> StringToElement(const std::string& data);
+		static std::string EnumToString(Element data);
+		static std::optional<Element> StringToEnum(const std::string& data);
 		
 	};
 

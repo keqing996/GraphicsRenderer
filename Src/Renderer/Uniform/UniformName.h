@@ -20,8 +20,8 @@ namespace Renderer::Uniform
 		NameHelper() = delete;
 		
 	public:
-		static std::string NameToString(Name data);
-		static std::optional<Name> StringToName(const std::string& data);
+		static std::string EnumToString(Name data);
+		static std::optional<Name> StringToEnum(const std::string& data);
 		
 	};
 

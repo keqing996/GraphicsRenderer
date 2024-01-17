@@ -5,7 +5,7 @@
 #include "ComponentType.h"
 #include <unordered_map>
 
-std::string ComponentTypeHelper::ComponentTypeToString(ComponentType data)
+std::string ComponentTypeHelper::EnumToString(ComponentType data)
 {
 	switch (data)
 	{
@@ -21,7 +21,7 @@ std::string ComponentTypeHelper::ComponentTypeToString(ComponentType data)
 	
 }
 
-std::optional<ComponentType> ComponentTypeHelper::StringToComponentType(const std::string& data)
+std::optional<ComponentType> ComponentTypeHelper::StringToEnum(const std::string& data)
 {
 	static std::unordered_map<std::string, ComponentType> map = 
 	{

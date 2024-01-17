@@ -19,35 +19,35 @@ namespace Renderer
 
             const std::string& uniVarType = uniformVarConfig["Type"];
             const std::string& uniVarName = uniformVarConfig["Name"];
-            if (uniVarType == MaterialUniformVariableTypeHelper::MaterialUniformVariableTypeToString(MaterialUniformVariableType::Int))
+            if (uniVarType == MaterialUniformVariableTypeHelper::EnumToString(MaterialUniformVariableType::Int))
             {
                 int value = uniformVarConfig["Value"];
                 pUniVar = std::make_shared<MaterialUniformVariableNumeric<int>>(uniformBlockName, uniformValueName, value);
             }
-            else if (uniVarType == MaterialUniformVariableTypeHelper::MaterialUniformVariableTypeToString(MaterialUniformVariableType::Uint))
+            else if (uniVarType == MaterialUniformVariableTypeHelper::EnumToString(MaterialUniformVariableType::Uint))
             {
                 unsigned int value = uniformVarConfig["Value"];
                 pUniVar = std::make_shared<MaterialUniformVariableNumeric<unsigned int>>(uniformBlockName, uniformValueName, value);
             }
-            else if (uniVarType == MaterialUniformVariableTypeHelper::MaterialUniformVariableTypeToString(MaterialUniformVariableType::Float))
+            else if (uniVarType == MaterialUniformVariableTypeHelper::EnumToString(MaterialUniformVariableType::Float))
             {
                 float value = uniformVarConfig["Value"];
                 pUniVar = std::make_shared<MaterialUniformVariableNumeric<float>>(uniformBlockName, uniformValueName, value);
             }
-            else if (uniVarType == MaterialUniformVariableTypeHelper::MaterialUniformVariableTypeToString(MaterialUniformVariableType::Float2))
+            else if (uniVarType == MaterialUniformVariableTypeHelper::EnumToString(MaterialUniformVariableType::Float2))
             {
                 const float x = uniformVarConfig["X"];
                 const float y = uniformVarConfig["Y"];
                 pUniVar = std::make_shared<MaterialUniformVariableNumeric<Eigen::Vector2f>>(uniformBlockName, uniformValueName, Eigen::Vector2f { x, y });
             }
-            else if (uniVarType == MaterialUniformVariableTypeHelper::MaterialUniformVariableTypeToString(MaterialUniformVariableType::Float3))
+            else if (uniVarType == MaterialUniformVariableTypeHelper::EnumToString(MaterialUniformVariableType::Float3))
             {
                 const float x = uniformVarConfig["X"];
                 const float y = uniformVarConfig["Y"];
                 const float z = uniformVarConfig["Z"];
                 pUniVar = std::make_shared<MaterialUniformVariableNumeric<Eigen::Vector3f>>(uniformBlockName, uniformValueName, Eigen::Vector3f { x, y, z });
             }
-            else if (uniVarType == MaterialUniformVariableTypeHelper::MaterialUniformVariableTypeToString(MaterialUniformVariableType::Float4))
+            else if (uniVarType == MaterialUniformVariableTypeHelper::EnumToString(MaterialUniformVariableType::Float4))
             {
                 const float x = uniformVarConfig["X"];
                 const float y = uniformVarConfig["Y"];
@@ -75,7 +75,7 @@ namespace Renderer
 
         for (const auto& [passName, passShaderConfig]: json.items())
         {
-            auto pass = RendererPassTypeHelper::StringToRendererPassType(passName);
+            auto pass = RendererPassTypeHelper::StringToEnum(passName);
             if (!pass.has_value())
             {
                 Helper::Logger::LogError("Material pass error, {}, {}", materialPath, passName);
@@ -85,7 +85,7 @@ namespace Renderer
             auto pShader = ShaderProgram::Create();
 
             // vertex
-            const std::string& vertexShaderTypeName = ShaderTypeHelper::ShaderTypeToString(ShaderType::Vertex);
+            const std::string& vertexShaderTypeName = ShaderTypeHelper::EnumToString(ShaderType::Vertex);
             if (passShaderConfig.contains(vertexShaderTypeName))
             {
                 auto vertexNode = passShaderConfig[vertexShaderTypeName];
@@ -94,7 +94,7 @@ namespace Renderer
             }
 
             // pixel
-            const std::string& pixelShaderTypeName = ShaderTypeHelper::ShaderTypeToString(ShaderType::Pixel);
+            const std::string& pixelShaderTypeName = ShaderTypeHelper::EnumToString(ShaderType::Pixel);
             if (passShaderConfig.contains(pixelShaderTypeName))
             {
                 // attach shader

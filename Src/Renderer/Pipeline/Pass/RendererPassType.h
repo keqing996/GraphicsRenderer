@@ -21,8 +21,8 @@ namespace Renderer
 		RendererPassTypeHelper() = delete;
 		
 	public:
-		static std::string RendererPassTypeToString(RendererPassType data);
-		static std::optional<RendererPassType> StringToRendererPassType(const std::string& data);
+		static std::string EnumToString(RendererPassType data);
+		static std::optional<RendererPassType> StringToEnum(const std::string& data);
 		
 	};
 

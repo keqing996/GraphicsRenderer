@@ -7,7 +7,7 @@
 namespace Renderer
 {
 	
-	std::string RendererPassTypeHelper::RendererPassTypeToString(RendererPassType data)
+	std::string RendererPassTypeHelper::EnumToString(RendererPassType data)
 	{
 		switch (data)
 		{
@@ -21,7 +21,7 @@ namespace Renderer
 		
 	}
 	
-	std::optional<RendererPassType> RendererPassTypeHelper::StringToRendererPassType(const std::string& data)
+	std::optional<RendererPassType> RendererPassTypeHelper::StringToEnum(const std::string& data)
 	{
 		static std::unordered_map<std::string, RendererPassType> map = 
 		{

@@ -7,7 +7,7 @@
 namespace Renderer::Uniform
 {
 	
-	std::string NameHelper::NameToString(Name data)
+	std::string NameHelper::EnumToString(Name data)
 	{
 		switch (data)
 		{
@@ -19,7 +19,7 @@ namespace Renderer::Uniform
 		
 	}
 	
-	std::optional<Name> NameHelper::StringToName(const std::string& data)
+	std::optional<Name> NameHelper::StringToEnum(const std::string& data)
 	{
 		static std::unordered_map<std::string, Name> map = 
 		{
