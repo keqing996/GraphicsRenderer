@@ -15,16 +15,16 @@
 					{
 						"Name": "u_SelfColor",
 						"Type": "Float3",
-						"X": 0.3,
-						"Y": 0.6,
-						"Z": 0.4
+						"X": 0.9,
+						"Y": 0.9,
+						"Z": 0.9
 					}
 				]
 			}
 		],
 		"Textures": [
 			{
-				"UniformVarName": "u_Texture",
+				"UniformVarName": "u_mainTexture",
 				"Slot": 0,
 				"Path": "Assets/Texture/wall.jpg"
 			}
