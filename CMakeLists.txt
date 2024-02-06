@@ -4,6 +4,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS True)
 
 project(RenderEngine)
 
+add_subdirectory(Helper)
+
 set(TargetName RenderEngine)
 set(ImGuiDir ThirdParty/imgui/)
 set(CMAKE_CXX_STANDARD 20)
@@ -12,7 +14,6 @@ find_package(OpenGL REQUIRED)
 
 file (GLOB_RECURSE ResFiles Resource/*.rc)
 file (GLOB_RECURSE SrcFiles Src/*.cpp)
-file (GLOB_RECURSE HelperSrcFiles Helper/src/*.cpp)
 file (GLOB_RECURSE ManifestFiles Manifest/*.manifest)
 
 add_executable(${TargetName}
@@ -46,7 +47,6 @@ set_target_properties(${TargetName} PROPERTIES
 
 target_include_directories(${TargetName}
         PRIVATE
-        Helper/src/ # Helper
         Src/ # self root
         ThirdParty/ # eigen
         ${ImGuiDir}   # imgui
@@ -59,6 +59,7 @@ find_library(D3D11_LIBRARY d3d11.lib
 )
 
 target_link_libraries(${TargetName}
+        cpphelper
         ${OPENGL_LIBRARIES} # opengl import lib -> Windows Kits\10\Lib\10.0.xxx.0\um\x64\OpenGL32.Lib
         d3d11.lib # d3d
 )
