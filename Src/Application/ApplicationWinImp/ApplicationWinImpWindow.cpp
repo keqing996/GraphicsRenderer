@@ -1,5 +1,4 @@
 #include "ApplicationWinImp.h"
-#include "Helper/WinApi/WinApiWindow.h"
 
 ApplicationWinImp::ApplicationWinImp()
 {
@@ -7,18 +6,18 @@ ApplicationWinImp::ApplicationWinImp()
 
 void ApplicationWinImp::RegisterWin32Window()
 {
-    Helper::Win::Window::RegisterInfo registerInfo {};
-    registerInfo.hIcon = nullptr;
-    registerInfo.hIconSmall = nullptr;
-    registerInfo.hCursor = nullptr;
+    Helper::Window::RegisterInfo registerInfo {};
+    registerInfo.pIcon = nullptr;
+    registerInfo.pIconSmall = nullptr;
+    registerInfo.pCursor = nullptr;
     registerInfo.pWinMsgProc = reinterpret_cast<void*>(&HandleMsg);
 
-    Helper::Win::Window::Register(WND_CLASS_NAME, registerInfo);
+    Helper::Window::Register(WND_CLASS_NAME, registerInfo);
 }
 
-void ApplicationWinImp::ShowWin32Window(int width, int height, const std::wstring& windowName)
+void ApplicationWinImp::ShowWin32Window(int width, int height, const std::string& windowName)
 {
-    Helper::Win::Window::StyleInfo style {};
+    Helper::Window::StyleInfo style {};
     style.canResize = true;
     style.hasSysmenu = true;
     style.hasMaxBtn = false;
@@ -27,17 +26,17 @@ void ApplicationWinImp::ShowWin32Window(int width, int height, const std::wstrin
     // send self via WM_NCCREATE. build the relationship between instance pointer and win api.
     void* lParam = this;
 
-    _hWnd = (HWND)Helper::Win::Window::Show(WND_CLASS_NAME, windowName, width, height, style, lParam);
+    _pWindow = Helper::Window::Show(WND_CLASS_NAME, windowName, width, height, style, lParam);
 }
 
 void ApplicationWinImp::DestroyWindow()
 {
-    Helper::Win::Window::Destroy(_hWnd);
+    Helper::Window::Destroy(std::move(_pWindow));
 }
 
 void ApplicationWinImp::UnRegisterWindow()
 {
-    Helper::Win::Window::UnRegister(WND_CLASS_NAME);
+    Helper::Window::UnRegister(WND_CLASS_NAME);
 }
 
 

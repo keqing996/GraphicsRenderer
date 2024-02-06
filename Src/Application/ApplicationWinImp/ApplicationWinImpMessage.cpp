@@ -104,7 +104,7 @@ LRESULT ApplicationWinImp::OnMsgWmMouseMove(HWND hWnd, UINT msg, WPARAM wParam, 
         Input::Mouse::OnMouseMove(pt.x, pt.y);
         if (!Input::Mouse::IsInWindow())
         {
-            ::SetCapture(_hWnd);
+            Helper::Window::SetCapture(_pWindow);
             Input::Mouse::OnMouseEnter(pt.x, pt.y);
         }
     } else
@@ -115,7 +115,7 @@ LRESULT ApplicationWinImp::OnMsgWmMouseMove(HWND hWnd, UINT msg, WPARAM wParam, 
             Input::Mouse::OnMouseMove(pt.x, pt.y);
         } else
         {
-            ::ReleaseCapture();
+            Helper::Window::ReleaseCapture();
             Input::Mouse::OnMouseLeave(pt.x, pt.y);
         }
     }
@@ -174,7 +174,7 @@ LRESULT ApplicationWinImp::OnMsgWmMouseWheel(HWND hWnd, UINT msg, WPARAM wParam,
     return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
-HWND ApplicationWinImp::GetWindowHandle() const
+const std::unique_ptr<Helper::Window::WindowHandle>& ApplicationWinImp::GetWindowHandle() const
 {
-    return _hWnd;
+    return _pWindow;
 }
