@@ -2,6 +2,8 @@
 
 #include <vector>
 #include <Helper/NonConstructible.h>
+#include <Helper/ResourcePtr.h>
+#include <Helper/Windows/Window.h>
 
 #include "AppLooper.h"
 #include "Define/RendererApi.h"
@@ -35,7 +37,7 @@ public:
     static int GetWindowHeight();
     static int GetWindowWidth();
     static RendererApi GetRenderApi();
-    static void* GetWindowHandle();
+    static const Helper::ResPtr<Helper::Window::WindowHandle>& GetWindowHandle();
     static uint64_t GetFrameCount();
     static void SetTargetFrame(uint32_t targetFrame);
     static uint32_t GetTargetFrame();
@@ -63,6 +65,6 @@ private:
     inline static std::vector<AppLooper*> _loopLogic {};
 
     /* Const */
-    inline static constexpr const wchar_t* WINDOW_NAME = L"Graphic Render";
+    static constexpr const char* WINDOW_NAME = "Graphic Render";
 
 };

@@ -8,6 +8,15 @@
 #include "Input/Mouse.h"
 #include "Time/Time.h"
 
+#include <iostream>
+#include <Helper/Logger.h>
+#include <Helper/Console.h>
+
+static void ConsoleLogCallBack(const char* msg)
+{
+    std::cout << msg << std::endl;
+}
+
 void Application::InitWindow(RendererApi api, int windowWidth, int windowHeight)
 {
     _api = api;
@@ -15,12 +24,12 @@ void Application::InitWindow(RendererApi api, int windowWidth, int windowHeight)
     _width = windowWidth;
     _height = windowHeight;
 
-    Helper::Logger::InitConsoleLogger();
-
-#ifdef BUILD_RELEASE
-    Helper::Logger::InitFileLogger("./log.txt");
-    Helper::Logger::SetFilterLevel(Util::Logger::Level::Error);
-#endif
+    Helper::Console::CreateConsole();
+    Helper::Console::AttachConsole();
+    Helper::Console::SetConsoleOutputUtf8();
+    Helper::Logger::AddLogCall<Helper::Logger::Level::Info>(&ConsoleLogCallBack);
+    Helper::Logger::AddLogCall<Helper::Logger::Level::Warning>(&ConsoleLogCallBack);
+    Helper::Logger::AddLogCall<Helper::Logger::Level::Error>(&ConsoleLogCallBack);
 
     _pImpl = new ApplicationWinImp();
     _pImpl->RegisterWin32Window();
@@ -142,7 +151,7 @@ RendererApi Application::GetRenderApi()
     return _api;
 }
 
-void* Application::GetWindowHandle()
+const Helper::ResPtr<Helper::Window::WindowHandle>& Application::GetWindowHandle()
 {
     return _pImpl->GetWindowHandle();
 }

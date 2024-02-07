@@ -174,7 +174,7 @@ LRESULT ApplicationWinImp::OnMsgWmMouseWheel(HWND hWnd, UINT msg, WPARAM wParam,
     return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
-const std::unique_ptr<Helper::Window::WindowHandle>& ApplicationWinImp::GetWindowHandle() const
+const Helper::ResPtr<Helper::Window::WindowHandle>& ApplicationWinImp::GetWindowHandle() const
 {
     return _pWindow;
 }

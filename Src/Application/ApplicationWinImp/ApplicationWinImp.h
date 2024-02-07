@@ -2,6 +2,7 @@
 
 #include <string>
 #include <Helper/NonCopyable.h>
+#include <Helper/ResourcePtr.h>
 #include <Helper/Windows/WindowsDefine.h>
 #include <Helper/Windows/Window.h>
 
@@ -13,7 +14,7 @@ public:
     ApplicationWinImp();
 
 public:
-    const std::unique_ptr<Helper::Window::WindowHandle>& GetWindowHandle() const;
+    const Helper::ResPtr<Helper::Window::WindowHandle>& GetWindowHandle() const;
     void RegisterWin32Window();
     void ShowWin32Window(int width, int height, const std::string& windowName);
     void DestroyWindow();
@@ -38,7 +39,7 @@ private:
     LRESULT OnMsgWmMouseWheel(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 private:
-    std::unique_ptr<Helper::Window::WindowHandle> _pWindow = nullptr;
+    Helper::ResPtr<Helper::Window::WindowHandle> _pWindow = nullptr;
 
 private:
     static constexpr const char* WND_CLASS_NAME = "Graphic Render";
