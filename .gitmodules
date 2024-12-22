@@ -1,6 +1,0 @@
-[submodule "ThirdParty/imgui"]
-	path = ThirdParty/imgui
-	url = https://github.com/ocornut/imgui.git
-[submodule "Helper"]
-	path = Helper
-	url = https://github.com/NoemieGrf/CppHelper.git
