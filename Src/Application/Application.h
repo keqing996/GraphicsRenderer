@@ -1,20 +1,14 @@
 #pragma once
 
+#include <memory>
 #include <vector>
-#include <Helper/NonConstructible.h>
-#include <Helper/ResourcePtr.h>
-#include <Helper/Windows/Window.h>
-
-#include "AppLooper.h"
+#include <NativeWindow/Window.h>
+#include <PIIK/Utility/NonCopyable.h>
 #include "Define/RendererApi.h"
+#include "AppLooper.h"
 
-class ApplicationWinImp;
-
-class Application : public Helper::NonConstructible
+class Application : public Piik::NonCopyable
 {
-public:
-    friend class ApplicationWinImp;
-
 public:
     static void InitWindow(RendererApi api, int windowWidth, int windowHeight);
     static void DestroyWindow();
@@ -49,15 +43,16 @@ private:
     static void WaitForTargetFrame();
 
 private:
+    Application() = default;
+
+private:
     /* Imp */
-    inline static ApplicationWinImp* _pImpl = nullptr;
+    inline static NativeWindow::Window* _pWindow = nullptr;
 
     /* Rhi */
     inline static RendererApi _api = RendererApi::OpenGL;
 
     /* Basic */
-    inline static int _height = 0;
-    inline static int _width = 0;
     inline static uint64_t _frameCount = 0;
     inline static uint32_t _targetFrame = 9999;
 

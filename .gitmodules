@@ -1,0 +1,6 @@
+[submodule "SubModule/PIIK"]
+	path = SubModule/PIIK
+	url = https://github.com/keqing996/PIIK.git
+[submodule "SubModule/NativeWindow"]
+	path = SubModule/NativeWindow
+	url = https://github.com/keqing996/NativeWindow.git

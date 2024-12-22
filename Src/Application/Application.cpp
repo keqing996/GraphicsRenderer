@@ -1,39 +1,49 @@
 
+#include <iostream>
+
+#include <PIIK/Platform/Windows/Console.h>
+#include <PIIK/Utility/Logger.h>
+#include <NativeWindow/Service/InputService/InputService.h>
+
 #include "Application.h"
-#include "ApplicationWinImp/ApplicationWinImp.h"
-#include "Helper/Logger.h"
 #include "Renderer/RenderCommand/RenderCommand.h"
 #include "Editor/Editor.h"
 #include "Input/Keyboard.h"
 #include "Input/Mouse.h"
 #include "Time/Time.h"
 
-#include <iostream>
-#include <Helper/Logger.h>
-#include <Helper/Console.h>
-
-static void ConsoleLogCallBack(const char* msg)
+static void ConsoleLogCallBack(Piik::Logger::Level level, const char* tag, const char* message)
 {
-    std::cout << msg << std::endl;
+    using namespace Piik::Windows;
+
+    if (level == Piik::Logger::Level::Error)
+    {
+        Console::SetStdOutColor(Console::Color::Red, Console::Color::Black);
+        std::cout << "[E]" << tag << '\t' << message << std::endl;
+        Console::SetStdOutColor(Console::Color::White, Console::Color::Black);
+    }
+    else if (level == Piik::Logger::Level::Warning)
+    {
+        Console::SetStdOutColor(Console::Color::Yellow, Console::Color::Black);
+        std::cout << "[W]" << tag << '\t'  << message << std::endl;
+        Console::SetStdOutColor(Console::Color::White, Console::Color::Black);
+    }
+    else
+        std::cout << "[I]" << tag << '\t'  << message << std::endl;
 }
 
 void Application::InitWindow(RendererApi api, int windowWidth, int windowHeight)
 {
     _api = api;
 
-    _width = windowWidth;
-    _height = windowHeight;
+    Piik::Windows::Console::CreateConsole();
+    Piik::Windows::Console::AttachConsole();
+    Piik::Windows::Console::SetConsoleOutputUtf8();
+    Piik::Logger::SetLogger(ConsoleLogCallBack);
 
-    Helper::Console::CreateConsole();
-    Helper::Console::AttachConsole();
-    Helper::Console::SetConsoleOutputUtf8();
-    Helper::Logger::AddLogCall<Helper::Logger::Level::Info>(&ConsoleLogCallBack);
-    Helper::Logger::AddLogCall<Helper::Logger::Level::Warning>(&ConsoleLogCallBack);
-    Helper::Logger::AddLogCall<Helper::Logger::Level::Error>(&ConsoleLogCallBack);
-
-    _pImpl = new ApplicationWinImp();
-    _pImpl->RegisterWin32Window();
-    _pImpl->ShowWin32Window(_width, _height, WINDOW_NAME);
+    _pWindow = new NativeWindow::Window();
+    _pWindow->Create(windowWidth, windowHeight, WINDOW_NAME, NativeWindow::WindowStyle::DefaultStyle());
+    _pWindow->AddService<NativeWindow::InputService>();
 
     Renderer::RenderCommand::Init();
     Editor::Environment::Init();
@@ -51,7 +61,7 @@ void Application::DestroyWindow()
     _pImpl->DestroyWindow();
     _pImpl->UnRegisterWindow();
 
-    delete _pImpl;
+    delete _pWindow;
 }
 
 void Application::RunLoop()

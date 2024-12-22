@@ -1,5 +1,5 @@
 
-#include <Helper/WinApi/WindowsPlatform.h>
+#include <PIIK/Platform/Windows/WindowsDefine.h>
 #include "Define/RendererApi.h"
 #include "Application/Application.h"
 #include "Looper/TestLooper.h"
